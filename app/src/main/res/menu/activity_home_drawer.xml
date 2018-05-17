@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_add"
+            android:icon="@drawable/add_cal"
+            android:title="Add Slots" />
+        <item
+            android:id="@+id/nav_view"
+            android:icon="@drawable/view"
+            android:title="View Slots" />
+        <item
+            android:id="@+id/nav_ann"
+            android:icon="@drawable/ann"
+            android:title="Announcements" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/history"
+            android:title="History" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/about"
+            android:title="About" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/help"
+            android:title="Help" />
+    </group>
+
+</menu>

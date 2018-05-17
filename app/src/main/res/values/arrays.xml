@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="role_array">
+        <item>Chief Invigilator</item>
+        <item>Invigilator</item>
+        <item>Standby Invigilator</item>
+    </string-array>
+</resources>

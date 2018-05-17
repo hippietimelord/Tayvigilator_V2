@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30px"
+        tools:context=".Add">
+
+        <TextView
+            android:id="@+id/role_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Role"
+            android:textColor="@android:color/background_dark"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/editRole_ID"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/editTextBackground"
+            android:gravity="center_vertical"
+            android:hint="Choose role"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="?attr/editTextColor" />
+
+        <TextView
+            android:id="@+id/examStart_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Time"
+            android:textColor="@android:color/background_dark"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/editStart_ID"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/editTextBackground"
+            android:gravity="center_vertical"
+            android:hint="Choose exam start time"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="?attr/editTextColor" />
+
+        <TextView
+            android:id="@+id/examEnd_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Time"
+            android:textColor="@android:color/background_dark"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/editEnd_ID"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/editTextBackground"
+            android:gravity="center_vertical"
+            android:hint="Choose exam end time"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="?attr/editTextColor" />
+
+        <TextView
+            android:id="@+id/examDate_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textColor="@android:color/background_dark"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/editDate_ID"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/editTextBackground"
+            android:gravity="center_vertical"
+            android:hint="Choose exam date"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="?attr/editTextColor" />
+
+        <TextView
+            android:id="@+id/examVenue_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Venue"
+            android:textColor="@android:color/background_dark"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editVenue_ID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Choose exam venue"
+            android:textColorLink="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/submit_ID"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Submit" />
+    </LinearLayout>
+</ScrollView>
