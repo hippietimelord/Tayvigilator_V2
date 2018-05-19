@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,6 @@ public class Add extends AppCompatActivity implements
     private TextView examDateDialog;
     private TextView Venue;
 
-    String fileName = "file.txt"; //Adding file part
     Button buttonSubmit;
 
     @Override
@@ -82,7 +82,9 @@ public class Add extends AppCompatActivity implements
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveFile(fileName, Venue.getText().toString());
+                saveFile(roleDialog.getText().toString(), startTimeDialog.getText().toString(),
+                        endTimeDialog.getText().toString(), examDateDialog.getText().toString(),
+                        Venue.getText().toString());
             }
         });
 
@@ -116,9 +118,16 @@ public class Add extends AppCompatActivity implements
     }
 
     //File part
-    public void saveFile(String file, String text) {
+    public void saveFile(String role, String start, String end, String date, String text) {
+        File path = getApplicationContext().getFilesDir();
+        File file = new File (path, "file.txt");
+        FileOutputStream fos; //Create txt. file
         try {
-            FileOutputStream fos = openFileOutput(fos, Context.MODE_PRIVATE);
+            fos = openFileOutput("file.txt", Context.MODE_PRIVATE);
+            fos.write(role.getBytes());
+            fos.write(start.getBytes());
+            fos.write(end.getBytes());
+            fos.write(date.getBytes());
             fos.write(text.getBytes());
             fos.close();
             Toast.makeText(Add.this, "Slot Added !", Toast.LENGTH_SHORT).show();
