@@ -116,7 +116,7 @@ public class Announcements extends AppCompatActivity implements Runnable {
             case R.id.BTAn2 :
                 Toast.makeText(Announcements.this,"Announcement 2 is selected",Toast.LENGTH_SHORT).show();
                 mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann2);
-                displaytext.setText("MCQs Announcement rules");
+                displaytext.setText("Before Examination Rules + MCQs Announcement rules");
                 soundThread.start();
                 break;
             case R.id.BTAn3 :

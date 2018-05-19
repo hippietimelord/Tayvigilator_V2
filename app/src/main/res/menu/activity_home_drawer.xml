@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    >
 
     <group android:checkableBehavior="single">
         <item
@@ -11,7 +12,8 @@
         <item
             android:id="@+id/nav_view"
             android:icon="@drawable/view"
-            android:title="View Slots" />
+            android:title="View Slots"
+            />
         <item
             android:id="@+id/nav_ann"
             android:icon="@drawable/ann"
