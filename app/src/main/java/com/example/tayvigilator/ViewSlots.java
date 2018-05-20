@@ -3,10 +3,10 @@ package com.example.tayvigilator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileInputStream;
 
 public class ViewSlots extends AppCompatActivity {
@@ -17,19 +17,12 @@ public class ViewSlots extends AppCompatActivity {
         setContentView(R.layout.activity_view_slots);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button button = (Button) findViewById(R.id.testOB);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                readFile();
-            }
-        });
     }
 
-    public void readFile() {
+    public void onStart() {
         TextView tv = (TextView)  findViewById(R.id.testOutput);
-
+        File path = getApplicationContext().getFilesDir();
+        File file = new File (path, "file.txt");//creates file if not already exists
         try {
             FileInputStream fis = openFileInput("file.txt");
             int c;
@@ -37,9 +30,13 @@ public class ViewSlots extends AppCompatActivity {
             while ((c = fis.read()) != -1) {
                 temp = temp + Character.toString((char) c);
             }
-            tv.setText(temp);
+            if (temp.isEmpty())
+                tv.setText("Nothing to show");
+            else
+                tv.setText(temp);
             Toast.makeText(getBaseContext(), "file read", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
         }
+        super.onStart();
     }
 }
