@@ -29,7 +29,7 @@
             android:gravity="center_vertical"
             android:hint="Choose role"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
-            android:textColor="?attr/editTextColor" />
+            android:textColor="?attr/editTextColor"/>
 
         <TextView
             android:id="@+id/examStart_ID"
@@ -98,7 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Choose exam venue"
-            android:textColorLink="@android:color/darker_gray" />
+            android:textColorLink="@android:color/darker_gray"
+            android:backgroundTint="@android:color/holo_orange_light" />
 
         <Button
             android:id="@+id/submit_ID"
