@@ -8,8 +8,9 @@
 
     <ImageButton
         android:id="@+id/ppButton"
-        android:layout_width="wrap_content"
-        android:layout_height="51dp"
+        style="@android:style/Widget.Material.Button.Colored"
+        android:layout_width="61dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -22,7 +23,7 @@
 
     <ImageButton
         android:id="@+id/psButton"
-        android:layout_width="53dp"
+        android:layout_width="61dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="76dp"
@@ -33,7 +34,7 @@
 
     <ImageButton
         android:id="@+id/spButton"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="51dp"
         android:layout_marginBottom="4dp"
         android:layout_marginStart="64dp"
