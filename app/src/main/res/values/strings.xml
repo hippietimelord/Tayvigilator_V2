@@ -14,5 +14,6 @@
     <string name="start_time">Select exam start time</string>
     <string name="end_time">Select exam end time</string>
     <string name="date_picker">Select exam date</string>
+    <string name="logo">Logo</string>
 
 </resources>
