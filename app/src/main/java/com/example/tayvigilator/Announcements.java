@@ -34,6 +34,8 @@ public class Announcements extends AppCompatActivity implements Runnable {
         soundSeekBar = (SeekBar) findViewById(R.id.soundbar);
         displaytext = (TextView) findViewById(R.id.AnnDesc);
 
+        mp = new MediaPlayer();
+
         setupListeners();
     }
 
@@ -109,25 +111,45 @@ public class Announcements extends AppCompatActivity implements Runnable {
         switch(v.getId()){
             case R.id.BTAn1 :
                 Toast.makeText(Announcements.this,"Announcement 1 is selected",Toast.LENGTH_SHORT).show();
-                mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann1);
+                if (mp.isPlaying()) {
+                    mp.stop();
+                    mp = MediaPlayer.create(getBaseContext(),R.raw.ann1);
+                }else{
+                    mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann1);
+                }
                 displaytext.setText("Before Examination Rules");
                 soundThread.start();
                 break;
             case R.id.BTAn2 :
                 Toast.makeText(Announcements.this,"Announcement 2 is selected",Toast.LENGTH_SHORT).show();
-                mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann2);
+                if (mp.isPlaying()) {
+                    mp.stop();
+                    mp = MediaPlayer.create(getBaseContext(),R.raw.ann2);
+                }else{
+                    mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann2);
+                }
                 displaytext.setText("Before Examination Rules + MCQs Announcement rules");
                 soundThread.start();
                 break;
             case R.id.BTAn3 :
                 Toast.makeText(Announcements.this,"Announcement 3 is selected",Toast.LENGTH_SHORT).show();
-                mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann3);
+                if (mp.isPlaying()) {
+                    mp.stop();
+                    mp = MediaPlayer.create(getBaseContext(),R.raw.ann3);
+                }else{
+                    mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann3);
+                }
                 displaytext.setText("End of examination reminder");
                 soundThread.start();
                 break;
             case R.id.BTAn4 :
                 Toast.makeText(Announcements.this,"Announcement 4 is selected",Toast.LENGTH_SHORT).show();
-                mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann4);
+                if (mp.isPlaying()) {
+                    mp.stop();
+                    mp = MediaPlayer.create(getBaseContext(),R.raw.ann4);
+                }else{
+                    mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann4);
+                }
                 displaytext.setText("Exam Completion Announcement");
                 soundThread.start();
                 break;
@@ -135,4 +157,13 @@ public class Announcements extends AppCompatActivity implements Runnable {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mp.isPlaying())
+        {
+            mp.stop();
+            mp.release();
+        }
+    }
 }
