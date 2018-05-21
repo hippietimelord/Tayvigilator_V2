@@ -1,5 +1,6 @@
 package com.example.tayvigilator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -10,7 +11,9 @@ import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class ViewSlots extends AppCompatActivity {
@@ -37,23 +40,23 @@ public class ViewSlots extends AppCompatActivity {
                 String date = reader.nextLine();
                 String venue = reader.nextLine();
                 String extra = "";
-                if (endTimeChecker(end, date)) {
-                    if (startTimeChecker(start, date))
+
+                if (aTimeChecker(end, date)) {
+                    if (bTimeChecker(start, date))
                         extra = " (In Progress)";
                     else
                         extra = timeCalc(start, date);
-                    String slot =   role + "\n" +
+                    String slot =   role + " " +
                                     start + "\n" +
                                     end + "\n" +
-                                    date + "\n" +
-                                    venue + "\n" +
-                                    extra + "\n";
-                TextView textView = new TextView(this);
-                textView.setLayoutParams(dim);
-                tvList.add(textView);
-                tvList.get(i).setText(slot);
-                i++;
-                linearLayout.addView(textView);
+                                    date + " " + extra + "\n" +
+                                    venue + "\n";
+                    TextView textView = new TextView(this);
+                    textView.setLayoutParams(dim);
+                    tvList.add(textView);
+                    tvList.get(i).setText(slot);
+                    i++;
+                    linearLayout.addView(textView);
                 }
             }
             reader.close();
@@ -64,9 +67,11 @@ public class ViewSlots extends AppCompatActivity {
             textView.setText("Nothing to display");
             linearLayout.addView(textView);
         }
+
+        Intent intent = new Intent(this, ViewSlots.class);
     }
 
-    public Boolean endTimeChecker(String time, String date) {
+    public Boolean aTimeChecker(String time, String date) {
         SimpleDateFormat datetime = new SimpleDateFormat("dd MMM, yyyy (EEE) h:mm a");
         Date currentDT = Calendar.getInstance().getTime();
         try {
@@ -83,7 +88,7 @@ public class ViewSlots extends AppCompatActivity {
     }
 
 
-    public Boolean startTimeChecker(String time, String date) {
+    public Boolean bTimeChecker(String time, String date) {
         SimpleDateFormat datetime = new SimpleDateFormat("dd MMM, yyyy (EEE) h:mm a");
         Date currentDT = Calendar.getInstance().getTime();
         try {
