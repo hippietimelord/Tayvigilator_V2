@@ -13,7 +13,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Splash"
-            android:theme="@style/AppTheme.CustomTheme">
+            android:theme="@style/AppTheme.CustomTheme"
+            android:noHistory="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
