@@ -1,8 +1,10 @@
 package com.example.tayvigilator;
 
+import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,6 +37,8 @@ public class Announcements extends AppCompatActivity implements Runnable {
         displaytext = (TextView) findViewById(R.id.AnnDesc);
 
         mp = new MediaPlayer();
+        TextView textView = (TextView) findViewById(R.id.AnnDesc);
+        textView.setMovementMethod(new ScrollingMovementMethod());
 
         setupListeners();
     }
@@ -104,6 +108,7 @@ public class Announcements extends AppCompatActivity implements Runnable {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     public void playSound(View v){
 
         soundThread = new Thread(Announcements.this);
@@ -117,7 +122,18 @@ public class Announcements extends AppCompatActivity implements Runnable {
                 }else{
                     mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann1);
                 }
-                displaytext.setText("Before Examination Rules");
+                displaytext.setText("Before Examination Rules\n"+
+                        "\n- Please be reminded of these rules.\n- Please wait for instruction before you turn over your question papers.\n" +
+                        "- Examination misconduct carries severe penalties. Please be reminded that you should not be carrying on your person any material other than stationery. If you have accidentally brought in anything, please hand it over to the invigilator now.\n" +
+                        "- All valuables (e.g. wallet, handphone, smartwatches and including all the latest gadgets (e.g. smart glasses, pda, etc.) must not be left in your bags.\n" +
+                        "- All handphones and smartwatches must be switched off and placed face-down on the floor under your chair.\n" +
+                        "- Washroom visit is not allowed in the first ½ hour and last 15 minutes of the examination. You are required to remove your jacket if you wish to go to washroom.\n" +
+                        "- No candidate is allowed to leave the hall 15 minutes before the examination finishes.\n" +
+                        "- The examination will be conducted according to the clock in this examination hall.\n" +
+                        "- Raise your hand if you need any extra material or assistance.\n" +
+                        "- Fill in your attendance slips in the answer booklet and tear it off and place it at the top left-hand corner of your table together with your Student ID.\n" +
+                        "- You may turn over your question paper now.\n" +
+                        "- Please check that you have the correct examination question which is (subject) for (programme).The duration is _____. The exam paper must have printed sheets");
                 soundThread.start();
                 break;
             case R.id.BTAn2 :
@@ -128,7 +144,28 @@ public class Announcements extends AppCompatActivity implements Runnable {
                 }else{
                     mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann2);
                 }
-                displaytext.setText("Before Examination Rules + MCQs Announcement rules");
+                displaytext.setText("Before Examination Rules + MCQs rules\n"+
+                        "\n- Please be reminded of these rules.\n- Please wait for instruction before you turn over your question papers.\n" +
+                        "- Examination misconduct carries severe penalties. Please be reminded that you should not be carrying on your person any material other than stationery. If you have accidentally brought in anything, please hand it over to the invigilator now.\n" +
+                        "- All valuables (e.g. wallet, handphone, smartwatches and including all the latest gadgets (e.g. smart glasses, pda, etc.) must not be left in your bags.\n" +
+                        "- All handphones and smartwathces must be switched off and placed face-down on the floor under your chair.\n" +
+                        "- Washroom visit is not allowed in the first ½ hour and last 15 minutes of the examination. You are required to remove your jacket if you wish to go to washroom.\n" +
+                        "- No candidate is allowed to leave the hall 15 minutes before the examination finishes.\n" +
+                        "- The examination will be conducted according to the clock in this examination hall.\n" +
+                        "- Raise your hand if you need any extra material or assistance.\n" +
+                        "- Fill in your attendance slips in the answer booklet and tear it off and place it at the top left-hand corner of your table together with your Student ID.\n" +
+                        "- You may turn over your question paper now.\n" +
+                        "- Please check that you have the correct examination question which is (subject) for (programme).The duration is _____. The exam paper must have printed sheets\n\n" +
+                        "Multiple-choice Answer Sheet (MCQ):\n" +
+                        "Candidates will write their names as per Student ID.\n" +
+                        "Fill in your complete student number.\n" +
+                        "Marking directions:\n" +
+                        "1. Please use 2B or BB pencil only.\n" +
+                        "2. Do NOT use ink or ball point pen.\n" +
+                        "3. Shade circle completely with heavy black marks.\n" +
+                        "4. Erase cleanly any answer you wish to change.\n" +
+                        "5. Make no stray marks on the answer sheet.\n" +
+                        "You may begin now.");
                 soundThread.start();
                 break;
             case R.id.BTAn3 :
@@ -139,7 +176,7 @@ public class Announcements extends AppCompatActivity implements Runnable {
                 }else{
                     mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann3);
                 }
-                displaytext.setText("End of examination reminder");
+                displaytext.setText("End of examination reminder\n\n- You have another 20 minutes before the end of the examination.\n-Please note that you are not allowed to leave the hall for whatever reason in the last 15 minutes.");
                 soundThread.start();
                 break;
             case R.id.BTAn4 :
@@ -150,7 +187,11 @@ public class Announcements extends AppCompatActivity implements Runnable {
                 }else{
                     mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann4);
                 }
-                displaytext.setText("Exam Completion Announcement");
+                displaytext.setText("Exam Completion Announcement\n\n- The time is up. Please stop writing.\n" +
+                        "- Be seated and remain quiet until you are allowed to leave the hall.\n" +
+                        "- Make sure that your name, student number and table number are written on all answer booklets.\n" +
+                        "- Invigilators will collect your question papers and answer scripts now.\n" +
+                        "- Leave all unused booklet on the table. Crush all used paper and leave it on the table.");
                 soundThread.start();
                 break;
 
