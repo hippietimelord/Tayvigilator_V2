@@ -1,5 +1,9 @@
 package com.example.tayvigilator;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -178,10 +182,40 @@ public class Add extends AppCompatActivity implements
             fos.write("\n".getBytes());
             fos.close();
 
+            setAlert(this, start, date);
             Toast.makeText(Add.this, "Slot Added !", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(Add.this, "Unable to Add slot", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void setAlert(Context context, String time, String date) {
+        Intent intent = new Intent();
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(),
+                1253, intent, PendingIntent.FLAG_UPDATE_CURRENT|  Intent.FILL_IN_DATA);
+
+        AlarmManager manager = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
+        Calendar currentTime = Calendar.getInstance();
+        Calendar alert = Calendar.getInstance();
+        SimpleDateFormat datetime = new SimpleDateFormat("dd:MMMM:yyyy:h:mm");
+
+        try {
+            Date comTime = datetime.parse(date + " " + time);
+            String dt = comTime.toString();
+            String[] dmyhm = dt.split(":");
+            int day = Integer.parseInt(dmyhm[0].trim());
+            int month = Integer.parseInt(dmyhm[1].trim());
+            int year = Integer.parseInt(dmyhm[2].trim());
+            int hour = Integer.parseInt (dmyhm[3].trim());
+            int minute = Integer.parseInt (dmyhm[4].trim());
+            alert.set(Calendar.HOUR_OF_DAY, hour-1);
+            alert.set(Calendar.MINUTE, minute);
+            alert.set(Calendar.DATE, day);
+            alert.set(Calendar.MONTH, month);
+            alert.set(Calendar.YEAR, year);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
