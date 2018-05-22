@@ -37,10 +37,10 @@ public class History extends AppCompatActivity {
                 String date = reader.nextLine();
                 String venue = reader.nextLine();
                     String slot =   role + "\n" +
-                                    start + "\n" +
+                                    start + "-" +
                                     end + "\n" +
                                     date + "\n" +
-                                    venue + "\n\n";
+                                    venue + "\n";
                     TextView textView = new TextView(this);
                     textView.setLayoutParams(dim);
                     tvList.add(textView);

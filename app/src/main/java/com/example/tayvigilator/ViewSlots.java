@@ -46,8 +46,8 @@ public class ViewSlots extends AppCompatActivity {
                         extra = " (In Progress)";
                     else
                         extra = timeCalc(start, date);
-                    String slot =   role + " " +
-                                    start + "\n" +
+                    String slot =   role + "\n" +
+                                    start + "-" +
                                     end + "\n" +
                                     date + " " + extra + "\n" +
                                     venue + "\n";

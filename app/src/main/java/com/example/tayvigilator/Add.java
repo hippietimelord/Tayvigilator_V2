@@ -214,6 +214,7 @@ public class Add extends AppCompatActivity implements
             alert.set(Calendar.DATE, day);
             alert.set(Calendar.MONTH, month);
             alert.set(Calendar.YEAR, year);
+            manager.set(AlarmManager.RTC_WAKEUP, alert.getTimeInMillis(), pendingIntent);
         } catch (Exception e) {
             e.printStackTrace();
         }
