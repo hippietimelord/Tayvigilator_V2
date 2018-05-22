@@ -37,7 +37,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public void Notification(Context context, String message) {
         String strtitle = "Scheduled Invigilation Reminder";
-        Intent intent = new Intent(context, Add.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra("Scheduled Invigilation Reminder", title);
         intent.putExtra("1 hour to exam start", title);
         PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent,

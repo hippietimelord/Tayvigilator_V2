@@ -196,7 +196,6 @@ public class Add extends AppCompatActivity implements
                 1253, intent, PendingIntent.FLAG_UPDATE_CURRENT|  Intent.FILL_IN_DATA);
 
         AlarmManager manager = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
-        Calendar currentTime = Calendar.getInstance();
         Calendar alert = Calendar.getInstance();
         SimpleDateFormat datetime = new SimpleDateFormat("dd:MMMM:yyyy:h:mm");
 
