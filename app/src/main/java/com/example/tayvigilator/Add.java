@@ -160,7 +160,7 @@ public class Add extends AppCompatActivity implements
 
     //File part
     public void saveFile(String role, String start, String end, String date, String venue) {
-        File path = getApplicationContext().getExternalFilesDir(null);
+        File path = getApplicationContext().getFilesDir();
         File file = new File (path, "file.txt");
         if (!file.exists()) {
             try {

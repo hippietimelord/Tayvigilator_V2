@@ -27,12 +27,12 @@ public class ViewSlots extends AppCompatActivity {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinLay);
         LinearLayout.LayoutParams dim=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         try {
-            File path = getApplicationContext().getExternalFilesDir(null);
+            File path = getApplicationContext().getFilesDir();
             File file = new File (path, "file.txt");
             FileInputStream fis = new FileInputStream(file);
             Scanner reader = new Scanner(fis);
+            ArrayList<String> slot = new ArrayList<>();
             ArrayList<TextView> tvList = new ArrayList<>();
-            int i = 0;
             while (reader.hasNext()) {
                 String role = reader.nextLine(); //separate by tokens
                 String start = reader.nextLine();
@@ -45,21 +45,23 @@ public class ViewSlots extends AppCompatActivity {
                     if (bTimeChecker(start, date))
                         extra = " (In Progress)";
                     else
-                        extra = timeCalc(start, date);
-                    String slot =   role + "\n" +
+                        extra = "(" + timeCalc(start, date) + ")";
+                    slot.add(date + "\n" +
                                     start + "-" +
                                     end + "\n" +
-                                    date + " " + extra + "\n" +
-                                    venue + "\n";
-                    TextView textView = new TextView(this);
-                    textView.setLayoutParams(dim);
-                    tvList.add(textView);
-                    tvList.get(i).setText(slot);
-                    i++;
-                    linearLayout.addView(textView);
+                                    role + "\n" +
+                                    venue + " " + extra + "\n");
                 }
             }
+            Collections.sort(slot);
             reader.close();
+            for (int i = 0; i<slot.size(); i++) {
+                TextView textView = new TextView(this);
+                textView.setLayoutParams(dim);
+                tvList.add(textView);
+                tvList.get(i).setText(slot.get(i));
+                linearLayout.addView(textView);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             TextView textView = new TextView(this);
