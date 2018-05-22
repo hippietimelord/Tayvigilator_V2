@@ -58,6 +58,7 @@ public class ViewSlots extends AppCompatActivity {
             for (int i = 0; i<slot.size(); i++) {
                 TextView textView = new TextView(this);
                 textView.setLayoutParams(dim);
+                textView.setTextSize(22);
                 tvList.add(textView);
                 tvList.get(i).setText(slot.get(i));
                 linearLayout.addView(textView);
@@ -67,6 +68,7 @@ public class ViewSlots extends AppCompatActivity {
             TextView textView = new TextView(this);
             textView.setLayoutParams(dim);
             textView.setText("Nothing to display");
+            textView.setTextSize(22);
             linearLayout.addView(textView);
         }
     }

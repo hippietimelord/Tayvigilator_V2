@@ -19,6 +19,18 @@
         >
 
         <TextView
+            android:id="@+id/txt_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20sp"
+            android:text="Help:"
+            android:textColor="@android:color/black"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="4dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
             android:id="@+id/txt1_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
