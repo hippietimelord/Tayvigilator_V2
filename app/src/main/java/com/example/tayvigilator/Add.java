@@ -93,6 +93,8 @@ public class Add extends AppCompatActivity implements
 
                 if (validation(role, start, end, date, venue)) {
                     saveFile(role, start, end, date, venue);
+                    Intent hmpg = new Intent(Add.this,Home.class);
+                    startActivity(hmpg);
                 }
             }
         });

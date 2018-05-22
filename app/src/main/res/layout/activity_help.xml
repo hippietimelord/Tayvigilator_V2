@@ -1,20 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Help"
-    android:id="@+id/popup_1"
-    android:background="#F8E473"
-    android:orientation="vertical"
-    android:padding="10sp"
-    >
-    <TextView
-        android:id="@+id/txtView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5sp"
-        android:text="Help is on the way" />
+    android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Help"
+        android:id="@+id/popup_1"
+        android:background="#F8E473"
+        android:orientation="vertical"
+        android:padding="25sp"
+        >
+
+        <TextView
+            android:id="@+id/txt1_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How to add slots:"
+            android:textColor="@android:color/black"
+            android:textSize="25dp"
+            android:paddingBottom="20sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="4dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/txt2_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="1. Navigate to the Add Slots tab in the Menu.\n
+2. Fill in all the required details (Role, Exam Start Time, Exam End Time, Exam date and Exam Venue).\n
+3. Click on 'Submit' button.\n
+4. You will be able to view your slot on Home.\n"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txt3_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How to view your added slots:"
+            android:textColor="@android:color/black"
+            android:textSize="25dp"
+            android:paddingBottom="20sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="4dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/txt4_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="1. Navigate to the View Slots tab in the Menu.\n
+2. You will be able to view your slot on View Slots.\n"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txt5_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How to play announcements:"
+            android:textColor="@android:color/black"
+            android:textSize="25dp"
+            android:paddingBottom="20sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="4dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/txt6_ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="1. Navigate to the Announcements tab in the Menu.\n
+2. You will be able to view four buttons. Click on any one of them to select announcement.\n
+3. At the bottom, click on the Play button to play announcement. You can also Pause and Stop the announcements.\n"
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
+</ScrollView>
