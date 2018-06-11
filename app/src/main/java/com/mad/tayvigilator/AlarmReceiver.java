@@ -1,4 +1,4 @@
-package com.example.tayvigilator;
+package com.mad.tayvigilator;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;

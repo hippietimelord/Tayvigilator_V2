@@ -1,4 +1,4 @@
-package com.example.tayvigilator;
+package com.mad.tayvigilator;
 
 import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
@@ -134,6 +134,7 @@ public class Announcements extends AppCompatActivity implements Runnable {
                         "- Fill in your attendance slips in the answer booklet and tear it off and place it at the top left-hand corner of your table together with your Student ID.\n" +
                         "- You may turn over your question paper now.\n" +
                         "- Please check that you have the correct examination question which is (subject) for (programme).The duration is _____. The exam paper must have printed sheets");
+                displaytext.setTextSize(18);
                 soundThread.start();
                 break;
             case R.id.BTAn2 :
@@ -166,6 +167,7 @@ public class Announcements extends AppCompatActivity implements Runnable {
                         "4. Erase cleanly any answer you wish to change.\n" +
                         "5. Make no stray marks on the answer sheet.\n" +
                         "You may begin now.");
+                displaytext.setTextSize(18);
                 soundThread.start();
                 break;
             case R.id.BTAn3 :
@@ -177,6 +179,7 @@ public class Announcements extends AppCompatActivity implements Runnable {
                     mp = MediaPlayer.create(Announcements.this.getBaseContext(),R.raw.ann3);
                 }
                 displaytext.setText("End of examination reminder\n\n- You have another 20 minutes before the end of the examination.\n-Please note that you are not allowed to leave the hall for whatever reason in the last 15 minutes.");
+                displaytext.setTextSize(18);
                 soundThread.start();
                 break;
             case R.id.BTAn4 :
@@ -192,6 +195,7 @@ public class Announcements extends AppCompatActivity implements Runnable {
                         "- Make sure that your name, student number and table number are written on all answer booklets.\n" +
                         "- Invigilators will collect your question papers and answer scripts now.\n" +
                         "- Leave all unused booklet on the table. Crush all used paper and leave it on the table.");
+                displaytext.setTextSize(18);
                 soundThread.start();
                 break;
 

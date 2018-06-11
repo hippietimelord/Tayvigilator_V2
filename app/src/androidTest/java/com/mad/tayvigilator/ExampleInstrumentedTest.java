@@ -1,4 +1,4 @@
-package com.example.tayvigilator;
+package com.mad.tayvigilator;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

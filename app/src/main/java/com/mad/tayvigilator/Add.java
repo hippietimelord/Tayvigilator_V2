@@ -1,9 +1,10 @@
-package com.example.tayvigilator;
+package com.mad.tayvigilator;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,12 +36,14 @@ public class Add extends AppCompatActivity implements
     private TextView Venue;
 
     Button buttonSubmit;
+    DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        myDB = new DatabaseHelper(this);
 
         roleDialog = (TextView) findViewById(R.id.editRole_ID);
         startTimeDialog = (TextView) findViewById(R.id.editStart_ID);
@@ -81,7 +84,7 @@ public class Add extends AppCompatActivity implements
             }
         });
 
-        //Storing the data into file
+        //Storing the data into database
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,13 +95,13 @@ public class Add extends AppCompatActivity implements
                 String venue = Venue.getText().toString();
 
                 if (validation(role, start, end, date, venue)) {
-                    saveFile(role, start, end, date, venue);
-                    Intent hmpg = new Intent(Add.this,Home.class);
+                    myDB.insertData(role, start, end, date, venue);
+                    Intent hmpg = new Intent(Add.this,ViewSlots.class);
                     startActivity(hmpg);
                 }
+                Toast.makeText(Add.this, role + " Added!", Toast.LENGTH_SHORT).show();
             }
         });
-
 
     }
 
@@ -133,8 +136,7 @@ public class Add extends AppCompatActivity implements
         if (role.isEmpty() || start.isEmpty() || end.isEmpty() || date.isEmpty() || venue.isEmpty()) {
             Toast.makeText(Add.this, "One or more fields must not be blank!", Toast.LENGTH_SHORT).show();
             return false;
-        }
-        else {
+        } else {
             try {
                 SimpleDateFormat datetime = new SimpleDateFormat("dd MMM, yyyy (EEE) h:mm a");
                 Date currentDT = Calendar.getInstance().getTime();
@@ -145,12 +147,10 @@ public class Add extends AppCompatActivity implements
                 if (comStart.after(comEnd)) {
                     Toast.makeText(Add.this, "End Time must be after Start Time!", Toast.LENGTH_SHORT).show();
                     return false;
-                }
-                else if (comStart.before(sdfDT)) {
+                } else if (comStart.before(sdfDT)) {
                     Toast.makeText(Add.this, "Start time has already passed!", Toast.LENGTH_SHORT).show();
                     return false;
-                }
-                else
+                } else
                     return true;
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
@@ -160,7 +160,7 @@ public class Add extends AppCompatActivity implements
         }
     }
 
-    //File part
+   /* //File part
     public void saveFile(String role, String start, String end, String date, String venue) {
         File path = getApplicationContext().getFilesDir();
         File file = new File (path, "file.txt");
@@ -190,7 +190,7 @@ public class Add extends AppCompatActivity implements
             e.printStackTrace();
             Toast.makeText(Add.this, "Unable to Add slot", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     public void setAlert(Context context, String time, String date) {
         Intent intent = new Intent();

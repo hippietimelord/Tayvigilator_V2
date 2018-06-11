@@ -1,4 +1,4 @@
-package com.example.tayvigilator;
+package com.mad.tayvigilator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,10 +23,10 @@ public class History extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinLay);
-        LinearLayout.LayoutParams dim=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams dim = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         try {
             File path = getApplicationContext().getFilesDir();
-            File file = new File (path, "file.txt");
+            File file = new File(path, "file.txt");
             FileInputStream fis = new FileInputStream(file);
             Scanner reader = new Scanner(fis);
             ArrayList<String> slot = new ArrayList<>();
@@ -37,22 +37,25 @@ public class History extends AppCompatActivity {
                 String end = reader.nextLine();
                 String date = reader.nextLine();
                 String venue = reader.nextLine();
-                slot.add(date + "\n" +
-                        start + "-" +
-                        end + "\n" +
-                        role + "\n" +
-                        venue + "\n");
+                if (bTimeChecker(end, date)) {
+                    slot.add(date + "\n" +
+                            start + "-" +
+                            end + "\n" +
+                            role + "\n" +
+                            venue + "\n" +
+                            "----------------------------------------------------");
+                }
             }
             Collections.sort(slot);
             reader.close();
-            for (int i = 0; i<slot.size(); i++) {
-            TextView textView = new TextView(this);
-            textView.setLayoutParams(dim);
-            textView.setTextSize(22);
-            tvList.add(textView);
-            tvList.get(i).setText(slot.get(i));
-            linearLayout.addView(textView);
-        }
+            for (int i = 0; i < slot.size(); i++) {
+                TextView textView = new TextView(this);
+                textView.setLayoutParams(dim);
+                textView.setTextSize(22);
+                tvList.add(textView);
+                tvList.get(i).setText(slot.get(i));
+                linearLayout.addView(textView);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             TextView textView = new TextView(this);
@@ -60,6 +63,22 @@ public class History extends AppCompatActivity {
             textView.setText("Nothing to display");
             textView.setTextSize(22);
             linearLayout.addView(textView);
+        }
+    }
+
+    public Boolean bTimeChecker(String time, String date) {
+        SimpleDateFormat datetime = new SimpleDateFormat("dd MMM, yyyy (EEE) h:mm a");
+        Date currentDT = Calendar.getInstance().getTime();
+        try {
+            Date current = datetime.parse(datetime.format(currentDT));
+            Date check = datetime.parse(date + " " + time);
+            if (check.before(current))
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
