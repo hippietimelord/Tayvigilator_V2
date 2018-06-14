@@ -30,6 +30,7 @@ import java.util.Scanner;
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
