@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "SLOT.db";
     private static String TABLE_NAME = "SLOTREC";
@@ -42,6 +45,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
+    // To View Data which is in View Slots
+    public ArrayList<HashMap<String, String>> GetUsers(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<HashMap<String, String>> userList = new ArrayList<>();
+        String query = "SELECT DATE, ROLE, VENUE, START_TIME , END_TIME FROM "+ TABLE_NAME;
+        Cursor cursor = db.rawQuery(query,null);
+        while (cursor.moveToNext()){
+            HashMap<String,String> user = new HashMap<>();
+            user.put("DATE",cursor.getString(cursor.getColumnIndex(COL_5)));
+            user.put("ROLE",cursor.getString(cursor.getColumnIndex(COL_2)));
+            user.put("VENUE",cursor.getString(cursor.getColumnIndex(COL_6)));
+            user.put("START_TIME",cursor.getString(cursor.getColumnIndex(COL_3)));
+            user.put("END_TIME",cursor.getString(cursor.getColumnIndex(COL_4)));
+            userList.add(user);
+        }
+        return  userList;
+    }
+
 
     public Boolean insertData(String role, String start_time, String end_time, String date, String venue){
         SQLiteDatabase db=this.getWritableDatabase();
