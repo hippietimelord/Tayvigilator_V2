@@ -72,6 +72,7 @@ public class Home extends AppCompatActivity
 
         ArrayList<HashMap<String, String>> userList = myDB.GetUsers();
         lv = (ListView) findViewById(R.id.list_view1);
+        userList = filter(userList);
         ListAdapter adapter = new SimpleAdapter(Home.this, userList, R.layout.listrow,new String[]{"ID","DATE","ROLE","VENUE","START_TIME","END_TIME"}, new int[]{R.id.ID,R.id.EXAMDATE, R.id.ROLE, R.id.VENUE,R.id.STARTTIME,R.id.ENDTIME});
         lv.setAdapter(adapter);
         listViewItemLongClick();
