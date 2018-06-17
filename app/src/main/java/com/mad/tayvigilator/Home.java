@@ -2,7 +2,6 @@ package com.mad.tayvigilator;
 
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,13 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +30,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Home extends AppCompatActivity
@@ -73,7 +71,7 @@ public class Home extends AppCompatActivity
         lv = (ListView) findViewById(R.id.list_view1);
         ListAdapter adapter = new SimpleAdapter(Home.this, userList, R.layout.listrow,new String[]{"ID","DATE","ROLE","VENUE","START_TIME","END_TIME"}, new int[]{R.id.ID,R.id.EXAMDATE, R.id.ROLE, R.id.VENUE,R.id.STARTTIME,R.id.ENDTIME});
         lv.setAdapter(adapter);
-        listViewItemLongClick();
+
 //        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinLay1);
 //        LinearLayout.LayoutParams dim=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 //        try {
@@ -121,40 +119,31 @@ public class Home extends AppCompatActivity
 //        }
     }
 
-
-    private void listViewItemLongClick(){
-        lv = (ListView) findViewById(R.id.list_view1);
-
-        lv.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapter,
-                                                   View item, int pos, long id) {
-
-                        myDB.deleteRow(id);
-                        populateListView();
-
-
-                        Toast.makeText(Home.this, id + " Deleted!", Toast.LENGTH_SHORT).show();
-
-                        return true;
-                    }
-
-                });
-
-    }
-
-    private void populateListView(){
-        Cursor cursor = myDB.getAllRows();
+    public ArrayList<HashMap<String, String>> filter(ArrayList<HashMap<String, String>> list) {
+        Iterator<HashMap<String, String>> itr = list.iterator();
+        ArrayList<HashMap<String, String>> filtered = new ArrayList<>();
+        int i = 0;
+        while (itr.hasNext()) {
+            String date = list.get(i).get("DATE");
+            String time = list.get(i).get("END_TIME");
+            if (aTimeChecker(time, date))
+                filtered.add(list.get(i));
+            i++;
+            itr.next();
+        }
+        return filtered;
     }
 
     public Boolean aTimeChecker(String time, String date) {
-        SimpleDateFormat datetime = new SimpleDateFormat("dd MMM, yyyy (EEE) h:mm a");
+        SimpleDateFormat t = new SimpleDateFormat("h:mm a");
+        SimpleDateFormat d = new SimpleDateFormat("dd MMM, yyyy (EEE)");
         Date currentDT = Calendar.getInstance().getTime();
         try {
-            Date current = datetime.parse(datetime.format(currentDT));
-            Date check = datetime.parse(date + " " + time);
-            if (check.after(current))
+            Date currentT = t.parse(t.format(currentDT));
+            Date currentD = d.parse(d.format(currentDT));
+            Date tCheck = t.parse(time);
+            Date dCheck = d.parse(date);
+            if (tCheck.after(currentT) && dCheck.equals(currentD))
                 return true;
             else
                 return false;

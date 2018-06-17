@@ -2,7 +2,6 @@ package com.mad.tayvigilator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,10 +11,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class ViewSlots extends AppCompatActivity {
     private ListView lv;
@@ -33,42 +32,54 @@ public class ViewSlots extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.list_view);
         ListAdapter adapter = new SimpleAdapter(ViewSlots.this, userList, R.layout.listrow,new String[]{"ID","DATE","ROLE","VENUE","START_TIME","END_TIME"}, new int[]{R.id.ID,R.id.EXAMDATE, R.id.ROLE, R.id.VENUE,R.id.STARTTIME,R.id.ENDTIME});
         lv.setAdapter(adapter);
-        listViewItemLongClick();
 
+        //long-press to update data
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           final int arg2, long arg3) {
+
+                //invoking AlertDialog box
+                build = new AlertDialog.Builder(ViewSlots.this);
+                build.setTitle("Update/Delete");
+                build.setMessage("Do you want to update/delete the record?(Hit back to cancel)");
+
+                //user select UPDATE
+                build.setNegativeButton("UPDATE",
+                        new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                //Update record selected
+                                dialog.cancel();
+                            }
+                        });//end UPDATE
+
+                //user select DELETE
+                build.setPositiveButton("DELETE",
+                        new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog,int which) {
+                                //Delete Function
+                                dialog.cancel();
+                            }
+                        });//end DELETE
+                AlertDialog alert = build.create();
+                alert.show();
+
+                return true;
+            }
+        });//end setOnItemLongClickListener
+
+        //LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinLay);
+        //LinearLayout.LayoutParams dim=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        //ArrayList<String> slot = new ArrayList<>();
+        //ArrayList<TextView> tvList = new ArrayList<>();
+
+        //viewAll();
 
         }
-
-    private void listViewItemLongClick(){
-        lv = (ListView) findViewById(R.id.list_view);
-
-        lv.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapter,
-                                                   View item, int pos, long id) {
-
-                        myDB.deleteRow(id);
-                        populateListView();
-
-
-                        Toast.makeText(ViewSlots.this, id + " Deleted!", Toast.LENGTH_SHORT).show();
-
-                        return true;
-                    }
-
-                });
-
-    }
-
-    private void populateListView(){
-        Cursor cursor = myDB.getAllRows();
-    }
-
-    public void onClick_DeleteTasks(View v){
-        myDB.deleteAll();
-    }
-
-
         /*try {
             File path = getApplicationContext().getFilesDir();
             File file = new File (path, "file.txt");

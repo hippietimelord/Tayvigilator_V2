@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class History extends AppCompatActivity {
@@ -32,8 +33,8 @@ public class History extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myDB = new DatabaseHelper(this);
 
-
         ArrayList<HashMap<String, String>> userList = myDB.GetUsers();
+        userList = filter(userList);
         lv = (ListView) findViewById(R.id.listVIEWHIS);
         ListAdapter adapter = new SimpleAdapter(History.this, userList, R.layout.listrow,new String[]{"ID","DATE","ROLE","VENUE","START_TIME","END_TIME"}, new int[]{R.id.ID,R.id.EXAMDATE, R.id.ROLE, R.id.VENUE,R.id.STARTTIME,R.id.ENDTIME});
         lv.setAdapter(adapter);
@@ -80,6 +81,21 @@ public class History extends AppCompatActivity {
 //            textView.setTextSize(22);
 //            linearLayout.addView(textView);
 //        }
+    }
+
+    public ArrayList<HashMap<String, String>> filter(ArrayList<HashMap<String, String>> list) {
+        Iterator<HashMap<String, String>> itr = list.iterator();
+        ArrayList<HashMap<String, String>> filtered = new ArrayList<>();
+        int i = 0;
+        while (itr.hasNext()) {
+            String date = list.get(i).get("DATE");
+            String time = list.get(i).get("END_TIME");
+            if (bTimeChecker(time, date))
+                filtered.add(list.get(i));
+            i++;
+            itr.next();
+        }
+        return filtered;
     }
 
     public Boolean bTimeChecker(String time, String date) {
