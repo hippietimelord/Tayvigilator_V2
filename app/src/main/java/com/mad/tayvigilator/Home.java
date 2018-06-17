@@ -2,6 +2,7 @@ package com.mad.tayvigilator;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,11 +17,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -71,6 +74,7 @@ public class Home extends AppCompatActivity
         lv = (ListView) findViewById(R.id.list_view1);
         ListAdapter adapter = new SimpleAdapter(Home.this, userList, R.layout.listrow,new String[]{"ID","DATE","ROLE","VENUE","START_TIME","END_TIME"}, new int[]{R.id.ID,R.id.EXAMDATE, R.id.ROLE, R.id.VENUE,R.id.STARTTIME,R.id.ENDTIME});
         lv.setAdapter(adapter);
+        listViewItemLongClick();
 
 //        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinLay1);
 //        LinearLayout.LayoutParams dim=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -266,5 +270,33 @@ public class Home extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void listViewItemLongClick(){
+        lv = (ListView) findViewById(R.id.list_view1);
+
+        lv.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapter,
+                                                   View item, int pos, long id) {
+
+                        myDB.deleteRow(id);
+                        populateListView();
+
+
+                        Toast.makeText(Home.this, id + " Deleted!", Toast.LENGTH_SHORT).show();
+
+                        return true;
+                    }
+
+                });
+
+    }
+
+    private void populateListView(){
+
+        Cursor cursor = myDB.getAllRows();
+
     }
 }
