@@ -4,8 +4,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Add extends AppCompatActivity implements
+public class Update extends AppCompatActivity implements
         RoleRadioButton.RoleDialogListener,
         DatePickerFragment.DateDialogListener,
         sTimePickerFragment.TimeDialogListener,
@@ -32,13 +32,14 @@ public class Add extends AppCompatActivity implements
     private TextView examDateDialog;
     private TextView Venue;
 
+    Button buttonCancel;
     Button buttonSubmit;
     DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_update);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myDB = new DatabaseHelper(this);
 
@@ -47,6 +48,7 @@ public class Add extends AppCompatActivity implements
         endTimeDialog = (TextView) findViewById(R.id.editEnd_ID);
         examDateDialog = (TextView) findViewById(R.id.editDate_ID);
         Venue =(TextView)findViewById(R.id.editVenue_ID);
+        buttonCancel = (Button) findViewById(R.id.cancel_ID);
         buttonSubmit = (Button) findViewById(R.id.submit_ID);
 
 
@@ -102,29 +104,45 @@ public class Add extends AppCompatActivity implements
             }
         });
 
-        //Storing the data into database
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Update.this, ViewSlots.class);
+                startActivity(intent);
+                Toast.makeText(Update.this, "Update canceled!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Updating the database
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (validation()) {
+                    String id = getIntent().getStringExtra("ID");
                     String role = roleDialog.getText().toString();
                     String start = startTimeDialog.getText().toString();
                     String end = endTimeDialog.getText().toString();
                     String date = examDateDialog.getText().toString();
                     String venue = Venue.getText().toString();
 
-                    myDB.insertData(role, start, end, date, venue);
+                    myDB.updateRecords(id, role, start, end, date, venue);
                     setAlert(getApplicationContext(), start, date);
-                    Intent intent = new Intent(Add.this, ViewSlots.class);
+                    Intent intent = new Intent(Update.this, ViewSlots.class);
                     startActivity(intent);
-                    Toast.makeText(Add.this, role + " Added!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Update.this, role + " Added!", Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(Add.this,"There are unresolved errors. Pease make " +
+                    Toast.makeText(Update.this,"There are unresolved errors. Pease make " +
                             "sure all fields are filled correctly before proceeding.", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy (EEE)");
+        String hireDate = sdf.format(date);
+        return hireDate;
     }
 
     @Override
@@ -149,12 +167,6 @@ public class Add extends AppCompatActivity implements
     public void onFinishDialog(Date date) {
         examDateDialog.setText(formatDate(date));
         checkDT();
-    }
-
-    public String formatDate(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM, yyyy (EEE)");
-        String hireDate = sdf.format(date);
-        return hireDate;
     }
 
     public void checkDT() {
@@ -187,76 +199,19 @@ public class Add extends AppCompatActivity implements
 
     ///Reject invalid data
     public Boolean validation() {
-        /* if (role.isEmpty() || start.isEmpty() || end.isEmpty() || date.isEmpty() || venue.isEmpty()) {
-            Toast.makeText(Add.this, "One or more fields must not be blank!", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            try {
-                SimpleDateFormat datetime = new SimpleDateFormat("dd MMM, yyyy (EEE) h:mm a");
-                Date currentDT = Calendar.getInstance().getTime();
-                Date sdfDT = datetime.parse(datetime.format(currentDT));
-                Date comStart = datetime.parse(date + " " + start);
-                Date comEnd = datetime.parse(date + " " + end);
-
-                if (comStart.after(comEnd)) {
-                    Toast.makeText(Add.this, "End Time must be after Start Time!", Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (comStart.before(sdfDT)) {
-                    Toast.makeText(Add.this, "Start time has already passed!", Toast.LENGTH_SHORT).show();
-                    return false;
-                } else
-                    return true;
-            } catch (java.text.ParseException e) {
-                e.printStackTrace();
-                Toast.makeText(Add.this, "Unknown error has occurred", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        } */
         if (roleDialog.getError() != null)
-            return false;
+                return false;
         else if (startTimeDialog.getError() != null)
-            return false;
+                return false;
         else if (endTimeDialog.getError() != null)
-            return false;
+                return false;
         else if (examDateDialog.getError() != null)
-            return false;
+                return false;
         else if (Venue.getError() != null)
-            return false;
+                return false;
         else
-            return true;
+                return true;
     }
-
-   /* //File part
-    public void saveFile(String role, String start, String end, String date, String venue) {
-        File path = getApplicationContext().getFilesDir();
-        File file = new File (path, "file.txt");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (Exception e) {
-            }
-        }//creates file if not already exists
-        try {
-            FileOutputStream fos = new FileOutputStream(file, true);
-            fos.write(role.getBytes());
-            fos.write("\n".getBytes());//add tokens
-            fos.write(start.getBytes());
-            fos.write("\n".getBytes());
-            fos.write(end.getBytes());
-            fos.write("\n".getBytes());
-            fos.write(date.getBytes());
-            fos.write("\n".getBytes());
-            fos.write(venue.getBytes());
-            fos.write("\n".getBytes());
-            fos.close();
-
-            setAlert(this, start, date);
-            Toast.makeText(Add.this, "Slot Added !", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(Add.this, "Unable to Add slot", Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
     public void setAlert(Context context, String time, String date) {
         Intent intent = new Intent();
@@ -286,22 +241,4 @@ public class Add extends AppCompatActivity implements
             e.printStackTrace();
         }
     }
-
-//    public String readFile(String file){
-//        String text ="";
-//
-//        try{
-//            FileInputStream fis = openFileInput(file);
-//            int size = fis.available();
-//            byte[] buffer = new byte[size];
-//            fis.read(buffer);
-//            fis.close();
-//            text=new String(buffer);
-//
-//        }catch (Exception e){
-//           e.printStackTrace();
-//            Toast.makeText(Add.this, "Unable to retrieve slots", Toast.LENGTH_SHORT).show();
-//        }
-//        return text;
-//    }
 }

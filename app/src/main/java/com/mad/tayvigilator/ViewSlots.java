@@ -2,41 +2,23 @@ package com.mad.tayvigilator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.ListIterator;
-import java.util.Scanner;
 
 public class ViewSlots extends AppCompatActivity {
     private ListView lv;
     private AlertDialog.Builder build;
     DatabaseHelper myDB;
-    RecyclerView rv;
-    EditText et;
-    Button save, retrieve;
-    ArrayList<Slot> slot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +29,7 @@ public class ViewSlots extends AppCompatActivity {
 
         ArrayList<HashMap<String, String>> userList = myDB.GetUsers();
         lv = (ListView) findViewById(R.id.list_view);
-        ListAdapter adapter = new SimpleAdapter(ViewSlots.this, userList, R.layout.listrow,new String[]{"DATE","ROLE","VENUE","START_TIME","END_TIME"}, new int[]{R.id.EXAMDATE, R.id.ROLE, R.id.VENUE,R.id.STARTTIME,R.id.ENDTIME});
+        ListAdapter adapter = new SimpleAdapter(ViewSlots.this, userList, R.layout.listrow,new String[]{"ID","DATE","ROLE","VENUE","START_TIME","END_TIME"}, new int[]{R.id.ID,R.id.EXAMDATE, R.id.ROLE, R.id.VENUE,R.id.STARTTIME,R.id.ENDTIME});
         lv.setAdapter(adapter);
 
         //long-press to update data
@@ -68,7 +50,10 @@ public class ViewSlots extends AppCompatActivity {
                             public void onClick(DialogInterface dialog,
                                                 int which) {
                                 //Update record selected
-
+                                /* String id = lv.getAdapter().getItem(1).toString();
+                                Intent intent = new Intent(ViewSlots.this, Update.class);
+                                intent.putExtra("ID", id);
+                                startActivity(intent); */
                                 dialog.cancel();
                             }
                         });//end UPDATE
@@ -78,9 +63,9 @@ public class ViewSlots extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog,int which) {
-
                                 //Delete Function
-
+                                /* String id = lv.getAdapter().getItem(1).toString();
+                                myDB.deleteData(id); */
                                 dialog.cancel();
                             }
                         });//end DELETE

@@ -1,5 +1,6 @@
 package com.mad.tayvigilator;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -8,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 public class AlarmReceiver extends BroadcastReceiver {
     Vibrator v;
@@ -21,7 +21,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         v=(Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(3000);
-        Toast.makeText(context, "Next exam is 1 hour away", Toast.LENGTH_SHORT).show();
 
         Bundle bundle = intent.getExtras();
         try{
@@ -30,31 +29,27 @@ public class AlarmReceiver extends BroadcastReceiver {
             e.printStackTrace();
         }
 
-        Notification(context, "1 hour to exam start.");
+        Notification(context, new Intent(context, Home.class));
 
     }
 
 
-    public void Notification(Context context, String message) {
-        String strtitle = "Scheduled Invigilation Reminder";
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra("Scheduled Invigilation Reminder", title);
-        intent.putExtra("1 hour to exam start", title);
+    public void Notification(Context context, Intent intent) {
+
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(
                 context)
                 .setSmallIcon(R.drawable.logo)
-                .setTicker(message)
+                .setTicker("Exam soon")
                 .setContentTitle(context.getString(R.string.app_name))
-                .setContentText(message)
+                .setContentText("Next exam will start in 1 hour")
                 .setContentIntent(pIntent)
                 .setAutoCancel(true);
-
-        NotificationManager notificationmanager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationmanager.notify(38, builder.build());
+        Notification n = builder.build();
+        nm.notify(R.drawable.logo, n);
 
     }
 }
