@@ -1,8 +1,12 @@
 package com.mad.tayvigilator;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.io.File;
@@ -12,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class HomeContent extends AppCompatActivity {
@@ -22,50 +27,50 @@ public class HomeContent extends AppCompatActivity {
         setContentView(R.layout.content_home);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinLay1);
-        LinearLayout.LayoutParams dim=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        try {
-            File path = getApplicationContext().getFilesDir();
-            File file = new File (path, "file.txt");
-            FileInputStream fis = new FileInputStream(file);
-            Scanner reader = new Scanner(fis);
-            ArrayList<String> slot = new ArrayList<>();
-            ArrayList<TextView> tvList = new ArrayList<>();
-            while (reader.hasNext()) {
-                String role = reader.nextLine(); //separate by tokens
-                String start = reader.nextLine();
-                String end = reader.nextLine();
-                String date = reader.nextLine();
-                String venue = reader.nextLine();
-                String extra = "";
-
-                if (aTimeChecker(start, date)) {
-                    extra = "(" + timeCalc(start, date) + ")";
-                    slot.add(date + "\n" +
-                            start + "-" +
-                            end + "\n" +
-                            role + "\n" +
-                            venue + " " + extra + "\n" +
-                            "----------------------------------------------------");
-                }
-            }
-            Collections.sort(slot);
-            reader.close();
-            for (int i = 0; i<slot.size(); i++) {
-                TextView textView = new TextView(this);
-                textView.setLayoutParams(dim);
-                textView.setTextSize(22);
-                tvList.add(textView);
-                tvList.get(i).setText(slot.get(i));
-                linearLayout.addView(textView);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            TextView textView = new TextView(this);
-            textView.setLayoutParams(dim);
-            textView.setText("Nothing to display");
-            linearLayout.addView(textView);
-        }
+//        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.LinLay1);
+//        LinearLayout.LayoutParams dim=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        try {
+//            File path = getApplicationContext().getFilesDir();
+//            File file = new File (path, "file.txt");
+//            FileInputStream fis = new FileInputStream(file);
+//            Scanner reader = new Scanner(fis);
+//            ArrayList<String> slot = new ArrayList<>();
+//            ArrayList<TextView> tvList = new ArrayList<>();
+//            while (reader.hasNext()) {
+//                String role = reader.nextLine(); //separate by tokens
+//                String start = reader.nextLine();
+//                String end = reader.nextLine();
+//                String date = reader.nextLine();
+//                String venue = reader.nextLine();
+//                String extra = "";
+//
+//                if (aTimeChecker(start, date)) {
+//                    extra = "(" + timeCalc(start, date) + ")";
+//                    slot.add(date + "\n" +
+//                            start + "-" +
+//                            end + "\n" +
+//                            role + "\n" +
+//                            venue + " " + extra + "\n" +
+//                            "----------------------------------------------------");
+//                }
+//            }
+//            Collections.sort(slot);
+//            reader.close();
+//            for (int i = 0; i<slot.size(); i++) {
+//                TextView textView = new TextView(this);
+//                textView.setLayoutParams(dim);
+//                textView.setTextSize(22);
+//                tvList.add(textView);
+//                tvList.get(i).setText(slot.get(i));
+//                linearLayout.addView(textView);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            TextView textView = new TextView(this);
+//            textView.setLayoutParams(dim);
+//            textView.setText("Nothing to display");
+//            linearLayout.addView(textView);
+//        }
     }
 
     public Boolean aTimeChecker(String time, String date) {

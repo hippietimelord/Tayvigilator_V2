@@ -65,6 +65,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return  userList;
     }
 
+    // To View Current Data in Home View
+    public ArrayList<HashMap<String, String>> GetCurrentDateSlot(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<HashMap<String, String>> userList = new ArrayList<>();
+        String query = "SELECT ID, DATE, ROLE, VENUE, START_TIME, END_TIME FROM SLOTREC WHERE (DATE)= strftime('%Y/%m/%d', 'now') ORDER BY DATE ASC";
+        Cursor cursor = db.rawQuery(query,null);
+        while (cursor.moveToNext()){
+            HashMap<String,String> user = new HashMap<>();
+            user.put("ID",cursor.getString(cursor.getColumnIndex(COL_1)));
+            user.put("DATE",cursor.getString(cursor.getColumnIndex(COL_5)));
+            user.put("ROLE",cursor.getString(cursor.getColumnIndex(COL_2)));
+            user.put("VENUE",cursor.getString(cursor.getColumnIndex(COL_6)));
+            user.put("START_TIME",cursor.getString(cursor.getColumnIndex(COL_3)));
+            user.put("END_TIME",cursor.getString(cursor.getColumnIndex(COL_4)));
+            userList.add(user);
+        }
+        return  userList;
+    }
+
+    // To View History Data in History View
+    public ArrayList<HashMap<String, String>> GetHistoryList(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<HashMap<String, String>> userList = new ArrayList<>();
+        String query = "SELECT ID, DATE, ROLE, VENUE, START_TIME, END_TIME FROM SLOTREC WHERE (DATE)= strftime('%Y/%m/%d', 'now') ORDER BY DATE ASC";
+        Cursor cursor = db.rawQuery(query,null);
+        while (cursor.moveToNext()){
+            HashMap<String,String> user = new HashMap<>();
+            user.put("ID",cursor.getString(cursor.getColumnIndex(COL_1)));
+            user.put("DATE",cursor.getString(cursor.getColumnIndex(COL_5)));
+            user.put("ROLE",cursor.getString(cursor.getColumnIndex(COL_2)));
+            user.put("VENUE",cursor.getString(cursor.getColumnIndex(COL_6)));
+            user.put("START_TIME",cursor.getString(cursor.getColumnIndex(COL_3)));
+            user.put("END_TIME",cursor.getString(cursor.getColumnIndex(COL_4)));
+            userList.add(user);
+        }
+        return  userList;
+    }
+
+
     public Boolean insertData(String role, String start_time, String end_time, String date, String venue){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
