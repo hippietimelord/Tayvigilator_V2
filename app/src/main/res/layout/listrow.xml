@@ -24,8 +24,8 @@
         android:layout_width="59dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="90dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="94dp"
         android:textColor="#343434"
         android:textSize="14dp" />
 
@@ -34,26 +34,25 @@
         android:layout_width="57dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:textColor="#343434"
         android:textSize="14dp" />
 
     <TextView
         android:id="@+id/ROLE"
-        android:layout_width="wrap_content"
+        android:layout_width="116dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/EXAMDATE"
-        android:layout_marginTop="7dp"
+        android:layout_alignStart="@+id/EXAMDATE"
+        android:layout_centerVertical="true"
         android:textColor="#343434"
         android:textSize="14dp" />
 
     <TextView
         android:id="@+id/VENUE"
-        android:layout_width="wrap_content"
+        android:layout_width="133dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/ROLE"
-        android:layout_alignBottom="@+id/ROLE"
-        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/RemoveButton"
+        android:layout_alignParentStart="true"
         android:textColor="#343434"
         android:textSize="14dp" />
 
@@ -62,8 +61,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="71dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="75dp"
         android:text="-" />
+
+    <TextView
+        android:id="@+id/RemoveButton"
+        android:layout_width="39dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="65dp"
+        android:text="X"
+        android:visibility="invisible" />
 
 </RelativeLayout>
