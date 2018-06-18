@@ -52,7 +52,9 @@ public class ViewSlots extends AppCompatActivity {
                         TextView idTV = (TextView) item.findViewById(R.id.ID);
                         slotID = Long.parseLong(idTV.getText().toString());
                         ID = id;
-                        build.setMessage("What do you wish to do?").setCancelable(false);
+                        myDB.deleteRow(slotID);
+                        Toast.makeText(ViewSlots.this,"Slot" + (ID+1) + " Deleted!", Toast.LENGTH_SHORT).show();
+                        /*  build.setMessage("What do you wish to do?").setCancelable(false);
                         build.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -71,7 +73,7 @@ public class ViewSlots extends AppCompatActivity {
 
                         build.create();
                         build.setTitle("Slot " + (ID+1));
-                        build.show();
+                        build.show(); */
 
                         return true;
                     }
