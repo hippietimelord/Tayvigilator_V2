@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -42,6 +43,8 @@ public class Update extends AppCompatActivity implements
         setContentView(R.layout.activity_update);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myDB = new DatabaseHelper(this);
+        Bundle bundle = getIntent().getExtras();
+        long id = bundle.getLong("ID");
 
         roleDialog = (TextView) findViewById(R.id.editRole_ID);
         startTimeDialog = (TextView) findViewById(R.id.editStart_ID);
@@ -51,6 +54,7 @@ public class Update extends AppCompatActivity implements
         buttonCancel = (Button) findViewById(R.id.cancel_ID);
         buttonSubmit = (Button) findViewById(R.id.submit_ID);
 
+        initFields(id);
 
         if(roleDialog.getText().toString().isEmpty())
             roleDialog.setError("Error: This cannot be blank!");
@@ -104,12 +108,12 @@ public class Update extends AppCompatActivity implements
             }
         });
 
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Update.this, ViewSlots.class);
                 startActivity(intent);
-                Toast.makeText(Update.this, "Update canceled!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Update.this, "Edit canceled!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -137,6 +141,15 @@ public class Update extends AppCompatActivity implements
                             "sure all fields are filled correctly before proceeding.", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void initFields(long id) {
+        Cursor cursor = myDB.getRowData(id);
+        roleDialog.setText(cursor.getString(cursor.getColumnIndex("COL_2")));
+        startTimeDialog.setText(cursor.getString(cursor.getColumnIndex("COL_3")));
+        endTimeDialog.setText(cursor.getString(cursor.getColumnIndex("COL_4")));
+        examDateDialog.setText(cursor.getString(cursor.getColumnIndex("COL_5")));
+        Venue.setText(cursor.getString(cursor.getColumnIndex("COL_6")));
     }
 
     public String formatDate(Date date) {

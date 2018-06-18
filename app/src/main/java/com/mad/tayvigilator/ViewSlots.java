@@ -23,6 +23,8 @@ public class ViewSlots extends AppCompatActivity {
     private ListView lv;
     private ListAdapter adapter;
     private AlertDialog.Builder build;
+    private long slotID;
+    private long ID;
     DatabaseHelper myDB;
 
     @Override
@@ -48,13 +50,28 @@ public class ViewSlots extends AppCompatActivity {
                     public boolean onItemLongClick(AdapterView<?> parent,
                                                    View item, int pos, long id) {
                         TextView idTV = (TextView) item.findViewById(R.id.ID);
-                        Long del = Long.parseLong(idTV.getText().toString());
-                        myDB.deleteRow(del);
-                        ((BaseAdapter) adapter).notifyDataSetChanged();
-                        lv.invalidateViews();
-                        lv.setAdapter(adapter);
+                        slotID = Long.parseLong(idTV.getText().toString());
+                        ID = id;
+                        build.setMessage("What do you wish to do?").setCancelable(false);
+                        build.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(ViewSlots.this, Update.class);
+                                intent.putExtra("ID", slotID);
+                                startActivity(intent);
+                            }
+                        });
+                        build.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                myDB.deleteRow(slotID);
+                                Toast.makeText(ViewSlots.this,"Slot" + (ID+1) + " Deleted!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
-                        Toast.makeText(ViewSlots.this,"Slot" + (id+1) + " Deleted!", Toast.LENGTH_SHORT).show();
+                        build.create();
+                        build.setTitle("Slot " + (ID+1));
+                        build.show();
 
                         return true;
                     }

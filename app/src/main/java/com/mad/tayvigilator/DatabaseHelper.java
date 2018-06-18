@@ -132,6 +132,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getRowData(long id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor res=db.rawQuery("select * from " + TABLE_NAME + " WHERE ID = " + id,null);
+        return res;
+    }
+
     public boolean updateRecords(String id, String role, String start_time, String end_time, String date, String venue){
 
         SQLiteDatabase db=this.getWritableDatabase();
