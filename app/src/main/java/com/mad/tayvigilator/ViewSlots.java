@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -20,6 +21,7 @@ import java.util.Iterator;
 
 public class ViewSlots extends AppCompatActivity {
     private ListView lv;
+    private ListAdapter adapter;
     private AlertDialog.Builder build;
     DatabaseHelper myDB;
 
@@ -32,28 +34,27 @@ public class ViewSlots extends AppCompatActivity {
 
         ArrayList<HashMap<String, String>> userList = myDB.GetUsers();
         lv = (ListView) findViewById(R.id.list_view);
-        ListAdapter adapter = new SimpleAdapter(ViewSlots.this, userList, R.layout.listrow,new String[]{"ID","DATE","ROLE","VENUE","START_TIME","END_TIME"}, new int[]{R.id.ID,R.id.EXAMDATE, R.id.ROLE, R.id.VENUE,R.id.STARTTIME,R.id.ENDTIME});
+        adapter = new SimpleAdapter(ViewSlots.this, userList, R.layout.listrow,new String[]{"ID","DATE","ROLE","VENUE","START_TIME","END_TIME"}, new int[]{R.id.ID,R.id.EXAMDATE, R.id.ROLE, R.id.VENUE,R.id.STARTTIME,R.id.ENDTIME});
         lv.setAdapter(adapter);
         listViewItemLongClick();
-
-
-
-
     }
+
     private void listViewItemLongClick(){
         lv = (ListView) findViewById(R.id.list_view);
-
+        adapter = lv.getAdapter();
         lv.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
                     @Override
-                    public boolean onItemLongClick(AdapterView<?> adapter,
+                    public boolean onItemLongClick(AdapterView<?> parent,
                                                    View item, int pos, long id) {
+                        TextView idTV = (TextView) item.findViewById(R.id.ID);
+                        Long del = Long.parseLong(idTV.getText().toString());
+                        myDB.deleteRow(del);
+                        ((BaseAdapter) adapter).notifyDataSetChanged();
+                        lv.invalidateViews();
+                        lv.setAdapter(adapter);
 
-                        myDB.deleteRow(id);
-                        populateListView();
-
-
-                        Toast.makeText(ViewSlots.this, id + " Deleted!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ViewSlots.this,"Slot" + (id+1) + " Deleted!", Toast.LENGTH_SHORT).show();
 
                         return true;
                     }
@@ -62,14 +63,17 @@ public class ViewSlots extends AppCompatActivity {
 
     }
 
-    private void populateListView(){
-
+    /* private void populateListView(){
         Cursor cursor = myDB.getAllRows();
-
-    }
+    } */
 
     public void onClick_DeleteTasks(View v){
+        lv = (ListView) findViewById(R.id.list_view);
+        adapter = lv.getAdapter();
         myDB.deleteAll();
+        ((BaseAdapter) adapter).notifyDataSetChanged();
+        lv.invalidateViews();
+        lv.setAdapter(adapter);
         Toast.makeText(ViewSlots.this,  "All Slots Deleted!", Toast.LENGTH_SHORT).show();
     }
 
